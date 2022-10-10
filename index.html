@@ -1,0 +1,181 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"> </script> 
+</head> 
+<body> 
+<h2>HTML Simple Form Balance</h2> 
+<form> 
+  <label for="l_id">id:</label><br> 
+  <input type="text" id="l_id" name="l_id" value="1"><br> 
+  
+  <label for="l_balance_id">balance_id:</label><br> 
+  <input type="text" id="l_balance_id" name="l_balance_id" value="bal-1"><br>
+  
+  <label for="l_account">account:</label><br> 
+  <input type="text" id="l_account" name="l_account" value="acc-1"><br>
+  
+  <label for="l_amount">amount:</label><br> 
+  <input type="text" id="l_amount" name="l_amount" value="1"><br>
+  
+  <label for="l_description">description:</label><br> 
+  <input type="text" id="l_description" name="l_description" value="foo-data"><br><br> 
+  
+  <input id="post" type="button" name="post" value="POST"> 
+  <input id="put" type="button" name="put" value="PUT"> 
+  <input id="get-id" type="button" name="get-id" value="GET(id)"> 
+  <input id="get-list" type="button" name="get-list" value="GET(list)"> 
+  
+  <input id="info" 	type="button" name="info" value="info"> 
+  <input id="header" type="button" name="header" value="header"> 
+  <input id="health" type="button" name="health" value="health"> 
+   
+</form>  
+<p></p> 
+<script type="text/javascript"> 
+	$('#post').click(function(){ 
+		//alert("post")
+		$("p").html("</b>");	 
+		var formData = { 	id: 			$("#l_id").val(), 
+							balance_id:  	$("#l_balance_id").val(),
+							account:  		$("#l_account").val(),
+							amount: 		$("#l_amount").val(),
+							description:  	$("#l_description").val() 
+						};						
+		$.ajax({ 
+			type: "POST",
+			//contentType: 'x-www-form-urlencoded',
+			dataType: 'json', 
+			crossDomain: true, 
+			data: JSON.stringify(formData),  
+			url: "http://localhost:8900/balance/save", 
+			success: function(data, status){ 
+				console.log("success :",JSON.stringify(data)); 
+				$("p").html(JSON.stringify(data) + "</b>"); 
+			}, 
+			error: function(err){ 
+				console.log("failed: ", JSON.stringify(err)); 
+				$("p").html("failed :" + JSON.stringify(err) + "</b>");
+			} 
+		}); 
+	}); 
+	$('#put').click(function(){ 
+		$("p").html("</b>");	 
+		var formData = { 	id: 			$("#l_id").val(), 
+							balance_id:  	$("#l_balance_id").val(),
+							account:  		$("#l_account").val(),
+							amount: 		$("#l_amount").val(),
+							description:  	$("#l_description").val() 
+						};						
+		$.ajax({ 
+			type: "POST",
+			//contentType: 'x-www-form-urlencoded',
+			dataType: 'json', 
+			crossDomain: true, 
+			data: JSON.stringify(formData),  
+			url: "http://localhost:8900/balance/update", 
+			success: function(data, status){ 
+				console.log("success :",JSON.stringify(data)); 
+				$("p").html(JSON.stringify(data) + "</b>"); 
+			}, 
+			error: function(err){ 
+				console.log("failed: ", JSON.stringify(err)); 
+				$("p").html("failed :" + JSON.stringify(err) + "</b>");
+			} 
+		});  
+	}); 
+	$('#get-id').click(function(){	 
+		$("p").html("</b>");		 
+		$.ajax({ 
+			type: "GET", 
+			//contentType: "application/json", 
+			dataType: 'json', 
+			crossDomain: true, 
+			url: "http://localhost:8900/balance/" + $("#l_id").val(),
+			success: function(data, status){ 
+				console.log("success :",JSON.stringify(data)); 
+				$("p").html(JSON.stringify(data) + "</b>"); 
+			}, 
+			error: function(err){ 
+				console.log("failed: ", JSON.stringify(err)); 
+			} 
+		}); 
+	}); 
+	$('#get-list').click(function(){	 
+		$("p").html("</b>");	 
+		//alert(JSON.stringify(formData));		 
+		$.ajax({ 
+			type: "GET", 
+			//contentType: "x-www-form-urlencoded", 
+			dataType: 'json', 
+			crossDomain: true, 
+			url: "http://localhost:8900/balance/list", 
+			success: function(data, status){ 
+				console.log("success :",JSON.stringify(data)); 
+				$("p").html(JSON.stringify(data) + "</b>"); 
+			}, 
+			error: function(err){ 
+				console.log("failed: ", JSON.stringify(err)); 
+			} 
+		}); 
+	}); 
+	$('#info').click(function(){	 
+		$("p").html("</b>");	 
+		//alert(JSON.stringify(formData));		 
+		$.ajax({ 
+			type: "GET", 
+			contentType: "x-www-form-urlencoded", 
+			dataType: 'json', 
+			crossDomain: true, 
+			url: "http://localhost:8900/info", 
+			success: function(data, status){ 
+				console.log("success :",JSON.stringify(data)); 
+				$("p").html(JSON.stringify(data) + "</b>"); 
+			}, 
+			error: function(err){ 
+				console.log("failed: ", JSON.stringify(err)); 
+				$("p").html("failed :" + JSON.stringify(err) + "</b>");
+			} 
+		}); 
+	}); 
+	$('#header').click(function(){	 
+		$("p").html("</b>");	 
+		//alert(JSON.stringify(formData));		 
+		$.ajax({ 
+			type: "GET", 
+			contentType: "x-www-form-urlencoded", 
+			dataType: 'json', 
+			crossDomain: true, 
+			url: "http://localhost:8900/header", 
+			success: function(data, status){ 
+				console.log("success :",JSON.stringify(data)); 
+				$("p").html(JSON.stringify(data) + "</b>"); 
+			}, 
+			error: function(err){ 
+				console.log("failed: ", JSON.stringify(err)); 
+				$("p").html("failed :" + JSON.stringify(err) + "</b>");
+			} 
+		}); 
+	});
+	$('#health').click(function(){	 
+		$("p").html("</b>");	 
+		//alert(JSON.stringify(formData));		 
+		$.ajax({ 
+			type: "GET", 
+			contentType: "x-www-form-urlencoded", 
+			dataType: 'json', 
+			crossDomain: true, 
+			url: "http://localhost:8900/health", 
+			success: function(data, status){ 
+				console.log("success :",JSON.stringify(data)); 
+				$("p").html(JSON.stringify(data) + "</b>"); 
+			}, 
+			error: function(err){ 
+				console.log("failed: ", JSON.stringify(err)); 
+				$("p").html("failed :" + JSON.stringify(err) + "</b>");
+			} 
+		}); 
+	}); 	
+</script> 
+</body> 
+</html>

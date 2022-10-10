@@ -12,6 +12,7 @@ exports.handler = async (event, context) => {
 
   let payload;
   let body;
+  let requestBody;
   let statusCode = 200;
   const headers = {
     "Content-Type": "application/json",
@@ -27,8 +28,7 @@ exports.handler = async (event, context) => {
             Key: {
               id: event.pathParameters.id
             }
-          })
-          .promise();
+          }).promise();
         body = "Delete item Success :";
         break;
       case "GET":
@@ -39,8 +39,7 @@ exports.handler = async (event, context) => {
             Key: {
               id: event.pathParameters.id
             }
-          })
-          .promise();
+          }).promise();
         break;
         } else if (event.resource == "/health") {
           body = {status : true};
@@ -58,8 +57,8 @@ exports.handler = async (event, context) => {
             break;   
         }    
         //console.log("typeof...:", typeof event.body);
-        var requestBody = JSON.parse(event.body); //event.body; //
-        //var requestBody = event.body; 
+        requestBody = JSON.parse(event.body); // THROUTH APIGW
+        //requestBody = event.body; // THROUGH LAMBDA TEST
         //console.log("requestBody...:", requestBody);
 
         payload = {
@@ -83,8 +82,8 @@ exports.handler = async (event, context) => {
             break;   
         }    
         //console.log("typeof...:", typeof event.body);
-        var requestBody = JSON.parse(event.body); //event.body; //
-        //var requestBody = event.body; 
+        //requestBody = JSON.parse(event.body); // THROUTH APIGW
+        requestBody = event.body; // THROUGH LAMBDA TEST
         //console.log("requestBody...:", requestBody);
 
         payload = {
